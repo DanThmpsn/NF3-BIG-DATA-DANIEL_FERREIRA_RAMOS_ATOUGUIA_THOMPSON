@@ -1,0 +1,63 @@
+#Daniel Ferreira Ramos Atouguia Thompson 202002215836
+
+# Q1)
+
+import pandas as pd
+
+# Carregar o arquivo CSV
+df = pd.read_csv('https://raw.githubusercontent.com/DanThmpsn/NF3-BIG-DATA-DANIEL_FERREIRA_RAMOS_ATOUGUIA_THOMPSON/main/world_alcohol.csv')
+
+# a)
+agrupado_tipo_bebida = df.groupby('Beverage Types')
+
+for tipo, grupo in agrupado_tipo_bebida:
+    print("Tipo_bebida:", tipo)
+    print(grupo)
+    print("\n")
+
+# b)
+agrupado_regiao_ano = df.groupby(['WHO region', 'Year'])
+
+for (regiao, ano), grupo in agrupado_regiao_ano:
+    print("Região:", regiao)
+    print("Ano:", ano)
+    print(grupo)
+    print("\n")
+
+# c)
+contagem_regioes = df['WHO region'].value_counts()
+contagem_paises = df['Country'].value_counts()
+soma_bebida = df.groupby('Beverage Types')['Display Value'].sum()
+
+# Resultados
+print("Contagem_Regiões:")
+print(contagem_regioes)
+print("\nContagem_Países:")
+print(contagem_paises)
+print("\nSoma da coluna de valores por Bebida:")
+print(soma_bebida)
+
+# d)
+media_valores = df['Display Value'].mean()
+moda_valores = df['Display Value'].mode().values
+mediana_valores = df['Display Value'].median()
+descritiva_valores = df['Display Value'].describe()
+
+# Resultados
+print("\nD) Análises_estatísticas_da _coluna_dos_valores:")
+print("Média:", media_valores)
+print("Moda:", moda_valores)
+print("Mediana:", mediana_valores)
+print("Estatística_Descritiva:")
+print(descritiva_valores)
+
+# e i)
+coluna_bebidas_1985 = df.loc[df['Year'] == 1985, 'Beverage Types']
+print("\nE.1) Coluna_de_bebidas_do_ano_de_1985:")
+print(coluna_bebidas_1985)
+
+# e ii)
+coluna_regiao_acima_4 = df.loc[df['Display Value'] > 4, 'WHO region']
+print("\nE.2) Coluna_de_Região_com_valores_acima_de_4:")
+print(coluna_regiao_acima_4)
+
