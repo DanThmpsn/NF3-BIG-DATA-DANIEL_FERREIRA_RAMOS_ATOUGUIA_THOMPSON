@@ -1,0 +1,84 @@
+# Daniel Ferreira Ramos Atouguia Thompson
+
+# Q2)
+
+import pandas as pd
+
+# Carregar o arquivo CSV
+df = pd.read_csv('https://raw.githubusercontent.com/DanThmpsn/NF3-BIG-DATA-DANIEL_FERREIRA_RAMOS_ATOUGUIA_THOMPSON/main/cursos-prouni.csv')
+
+# a)
+df['nota_integral_ampla'].fillna(0.0, inplace=True)
+df['nota_integral_cotas'].fillna(0.0, inplace=True)
+df['nota_parcial_ampla'].fillna(0.0, inplace=True)
+df['nota_parcial_cotas'].fillna(0.0, inplace=True)
+
+# b)
+agrupado_grau = df.groupby('grau')
+
+# c)
+cursos_interesse = ['Matemática', 'Medicina', 'Pedagogia']
+agrupado_cursos_interesse = df[df['curso_busca'].isin(cursos_interesse)].groupby('curso_busca')
+
+# d)
+media_notas_corte_estado = df.groupby('uf_busca')['nota_integral_cotas'].mean()
+
+# e)
+agrupado_tecnologicos = df[df['grau'] == 'Tecnológico']
+
+# f)
+df.drop(columns=['cidade_filtro'], inplace=True)
+
+# g)
+media_mensalidades_medicina = df.loc[df['curso_busca'] == 'Medicina', 'mensalidade'].mean()
+
+# h)
+media_notas_corte_integral = df.loc[df['turno'] == 'Integral', 'nota_integral_cotas'].mean()
+
+# i)
+estatisticas_descritivas_bacharelado = df.loc[(df['grau'] == 'Bacharelado') & (df['turno'] == 'Integral'), 'nota_integral_ampla'].describe()
+
+# j)
+df.groupby('grau')['nota_integral_cotas'].mean().plot.bar(xlabel='Grau dos Cursos', ylabel='Notas Integral de Cotas')
+
+# Resultados
+
+print("a) Limpeza das colunas de notas, substituindo NaN por 0.0: ")
+df['nota_integral_ampla'].fillna(0.0, inplace=True)
+print("Coluna 'nota_integral_ampla' após a limpeza:")
+print(df['nota_integral_ampla'])
+print("\n")
+df['nota_integral_cotas'].fillna(0.0, inplace=True)
+print("Coluna 'nota_integral_cotas' após a limpeza:")
+print(df['nota_integral_cotas'])
+print("\n")
+df['nota_parcial_ampla'].fillna(0.0, inplace=True)
+print("Coluna 'nota_parcial_ampla' após a limpeza:")
+print(df['nota_parcial_ampla'])
+print("\n")
+df['nota_parcial_cotas'].fillna(0.0, inplace=True)
+print("Coluna 'nota_parcial_cotas' após a limpeza:")
+print(df['nota_parcial_cotas'])
+print("\n")
+
+print("B) Agrupamento por grau:")
+
+for grau, grupo in agrupado_grau:
+  print("Grau_dos_cursos:", grau)
+  print(grupo)
+  print("\n")
+
+print("\nC) Média_notas_de_corte-Estado:")
+print(media_notas_corte_estado)
+print("\n")
+print("\nD) Agrupamento_de_cursos-Tecnológicos:")
+print(agrupado_tecnologicos)
+print("\n")
+print("\nE) Média_mensalidades_dos_cursos_de_Medicina:")
+print(media_mensalidades_medicina)
+print("\n")
+print("\nF) Média_notas_de_corte_cursos_de_tempo_integral:")
+print(media_notas_corte_integral)
+print("\n")
+print("\nG) Estatísticas_Descritivas_Notas_Integral_Ampla_dos_cursos_de_Bacharelado:")
+print(estatisticas_descritivas_bacharelado)
